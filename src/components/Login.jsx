@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-
 const Login = () => {
-    const { singInUser } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const { singInUser, googleSingIn } = useContext(AuthContext)
     const handleLogin = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -12,11 +12,22 @@ const Login = () => {
         singInUser(email, password)
             .then(result => {
                 console.log(result.user)
+                e.target.reset()
+                navigate('/')
             })
             .catch(error => {
                 console.error(error);
             })
 
+    }
+    const handleGoogleSingIn =()=>{
+        googleSingIn()
+        .then(result =>{
+            console.log(result.user);
+        })
+        .catch(error =>{
+            console.error(error);
+        })
     }
     return (
         <div className="hero min-h-screen">
@@ -46,6 +57,7 @@ const Login = () => {
                             <button className="btn btn-primary">LOGIN</button>
                         </div>
                         <p>New here? Please <Link to={'/register'} className="link link-info">Register</Link></p>
+                        <p><button onClick={handleGoogleSingIn} className="link link-info">Google</button></p>
                     </form>
                 </div>
             </div>
