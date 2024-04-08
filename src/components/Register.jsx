@@ -9,9 +9,8 @@ const Register = () => {
         const name = e.target.name.value
         const email = e.target.email.value
         const password = e.target.password.value
-        console.log(name, email, password);
 
-        createUser(email , password)
+        createUser(email , password, name)
         .then(reuslt =>{
             console.log(reuslt.user);
 
